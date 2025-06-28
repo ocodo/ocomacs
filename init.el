@@ -3,8 +3,10 @@
 (setopt use-short-answers t)
 (setq package-enable-at-startup nil)
 (setq ring-bell-function 'ignore)
+(setq tool-bar-mode 0)
 (when (not initial-window-system) (xterm-mouse-mode 1))
 (menu-bar-mode 0)
+(scroll-bar-mode 0)
 
 ;; Use OcodoMono Nerd Font Light if available
 (unless (string= (describe-font "oooaoao") "No matching font found")
