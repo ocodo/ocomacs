@@ -3,16 +3,20 @@
 (setopt use-short-answers t)
 (setq package-enable-at-startup nil)
 (setq ring-bell-function 'ignore)
-(setq tool-bar-mode 0)
-(when (not initial-window-system) (xterm-mouse-mode 1))
+(tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; Use OcodoMono Nerd Font Light if available
-(unless (string= (describe-font "oooaoao") "No matching font found")
-  (set-face-font
-   'default
-   "-ocdo-OcodoMono-light-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+;; Use OcodoMono Nerd Font Light if available / and on GUI
+(when initial-window-system
+  (let ((ocodo-font "-ocdo-OcodoMono-light-normal-normal-*-*-*-*-*-m-0-iso10646-1"))
+    (unless (string= (fontp ocodo-font) "No matching font found")
+      (set-face-font
+       'default
+       ocodo-font))))
+
+;; xterm-mouse-mode in terminal
+(when (not initial-window-system) (xterm-mouse-mode 1))
 
 ;; Straight
 (defvar bootstrap-version)
