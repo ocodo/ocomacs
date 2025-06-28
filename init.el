@@ -32,17 +32,24 @@
 (straight-use-package 's)
 (straight-use-package 'move-text)
 (straight-use-package 'which-key)
+(straight-use-package 'lsp-mode)
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
 (straight-use-package 'ellama)
 (straight-use-package 'magit)
 (straight-use-package 'kurecolor)
 (straight-use-package 'markdown-mode)
+(straight-use-package 'jtsx)
+(straight-use-package 'tide)
+(straight-use-package 'company)
+(straight-use-package 'anaconda-mode)
+(straight-use-package 'lsp-pyright)
 
-;; Straight enabled package config
+;; Load creamsody, make it darker
 (load-theme 'creamsody 1)
 (load-theme 'creamsody-darker 1)
 
+;; Straight enabled package config
 ;; Load everything from /use
 (mapc
  'load
