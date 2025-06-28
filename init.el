@@ -3,6 +3,7 @@
 (setopt use-short-answers t)
 (setq package-enable-at-startup nil)
 (setq ring-bell-function 'ignore)
+(when (not initial-window-system) (xterm-mouse-mode 1))
 (menu-bar-mode 0)
 
 ;; Straight
