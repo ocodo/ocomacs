@@ -44,7 +44,16 @@
 (straight-use-package 'tide)
 (straight-use-package 'company)
 (straight-use-package 'anaconda-mode)
+(straight-use-package 'lua-mode)
+(straight-use-package 'lsp-javascript-typescript)
 (straight-use-package 'lsp-pyright)
+
+(straight-use-package 'all-the-icons)
+(straight-use-package
+ '(lambda-line
+   :type git
+   :host github
+   :repo "Lambda-Emacs/lambda-line"))
 
 ;; Load creamsody, make it darker
 (load-theme 'creamsody 1)
