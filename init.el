@@ -7,16 +7,16 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-;; Use OcodoMono Nerd Font Light if available / and on GUI
-(when initial-window-system
-  (let ((ocodo-font "-ocdo-OcodoMono-light-normal-normal-*-*-*-*-*-m-0-iso10646-1"))
-    (unless (string= (fontp ocodo-font) "No matching font found")
-      (set-face-font
-       'default
-       ocodo-font))))
-
-;; xterm-mouse-mode in terminal
-(when (not initial-window-system) (xterm-mouse-mode 1))
+(let ((ocodo-mono-light (font-spec
+			 :foundry "ocdo"
+			 :family "OcodoMono Nerd Font"
+			 :weight 'light)))
+  (if initial-window-system
+      ;; On Gui Use OcodoMono Nerd Font Light when available
+      (when (fontp ocodo-mono-light)
+	(set-face-attribute 'default nil :height 160 :font ocodo-mono-light))
+    ;; xterm-mouse-mode in terminal
+    (xterm-mouse-mode 1)))
 
 ;; Straight
 (defvar bootstrap-version)
