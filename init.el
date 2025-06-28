@@ -6,6 +6,12 @@
 (when (not initial-window-system) (xterm-mouse-mode 1))
 (menu-bar-mode 0)
 
+;; Use OcodoMono Nerd Font Light if available
+(unless (string= (describe-font "oooaoao") "No matching font found")
+  (set-face-font
+   'default
+   "-ocdo-OcodoMono-light-normal-normal-*-*-*-*-*-m-0-iso10646-1")
+
 ;; Straight
 (defvar bootstrap-version)
 

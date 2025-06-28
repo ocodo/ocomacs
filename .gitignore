@@ -5,3 +5,4 @@
 /tree-sitter/
 /.cache/
 /.lsp-session-v1
+/eln-cache/
