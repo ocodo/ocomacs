@@ -3,6 +3,8 @@
 (setopt use-short-answers t)
 (setq package-enable-at-startup nil)
 (setq ring-bell-function 'ignore)
+(menu-bar-mode 0)
+
 ;; Straight
 (defvar bootstrap-version)
 
@@ -34,12 +36,12 @@
 (straight-use-package 'orderless)
 (straight-use-package 'ellama)
 (straight-use-package 'magit)
+(straight-use-package 'kurecolor)
+(straight-use-package 'markdown-mode)
 
 ;; Straight enabled package config
 (load-theme 'creamsody 1)
-(load-theme 'creamsody-dark 1)
-(move-text-default-bindings)
-(which-key-mode 1)
+(load-theme 'creamsody-darker 1)
 
 ;; Load everything from /use
 (mapc
