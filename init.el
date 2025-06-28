@@ -42,6 +42,7 @@
 
 ;; Pacakages to install
 (straight-use-package 'creamsody-theme)
+(straight-use-package 'emacs-dashboard)
 (straight-use-package 's)
 (straight-use-package 'move-text)
 (straight-use-package 'which-key)
@@ -77,3 +78,10 @@
  'load
  (file-expand-wildcards
   (file-name-concat user-emacs-directory "use/*.el")))
+
+(setq
+ dashboard-startup-banner
+ (file-name-concat user-emacs-directory
+		   "golden-yak.png"))
+
+(dashboard-setup-startup-hook)
