@@ -38,7 +38,7 @@
 
 ;; Require use-package
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default 1)
+(setq straight-use-package-by-default t)
 
 ;; Straight enabled package config
 (load (file-name-concat user-emacs-directory "packages.el"))
