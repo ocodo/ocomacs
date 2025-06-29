@@ -7,16 +7,28 @@
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
 
-(let ((ocodo-mono-light (font-spec
-			 :foundry "ocdo"
-			 :family "OcodoMono Nerd Font"
-			 :weight 'light)))
-  (if initial-window-system
-      ;; On Gui Use OcodoMono Nerd Font Light when available
-      (when (fontp ocodo-mono-light)
-	(set-face-attribute 'default nil :height 160 :font ocodo-mono-light))
-    ;; xterm-mouse-mode in terminal
-    (xterm-mouse-mode 1)))
+(defvar preferred-font-size
+  160
+  "size in 1/10pt")
+
+(defvar personal-mono-font
+  (font-spec
+   :foundry "ocdo"
+   :family "OcodoMono Nerd Font"
+   :weight 'light)
+  "Personal font spec - Nerd Fonts recommended")
+
+(if initial-window-system
+    
+    ;; On GUI Use personal-mono-font
+    (when (fontp personal-mono-font)
+      (set-face-attribute
+       'default nil
+       :height preferred-font-size
+       :font personal-mono-font))
+  
+  ;; xterm-mouse-mode in terminal
+  (xterm-mouse-mode 1))
 
 ;;; Exit early if in commit mode
 (add-to-list 'auto-mode-alist '("/COMMIT_EDITMSG\\'" . diff-mode))
