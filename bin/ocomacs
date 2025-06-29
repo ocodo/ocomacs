@@ -1,2 +1,70 @@
 #!/bin/bash
 
+export EMACSDIR=${EMACSDIR:-~/.emacs.d}
+export OCOMACSNAME=$(basename $0)
+export BINDIR=$(dirname $0)
+
+ocomacs-help() {
+    cat <<EOF
+$(cat $BINDIR/ocomacs-header.ansi)
+
+   ...a post Doom Emacs config framework for Linux, Macos, WSL2/Linux
+
+Usage: $OCOMACSNAME [subcommand]
+
+   clean   - remove straight installed emacs packages
+   build   - install build emacs packages from $EMACSDIR/packages.el
+   rebuild - clean and build
+   list	   - list installed packages
+   docs    - project docs
+   help	   - this message
+[0m
+EOF
+}
+
+ocomacs-docs() {
+    if which bat > /dev/null 2> /dev/null; then
+	less -f <(cat $BINDIR/ocomacs-header.ansi $EMACSDIR/README.md)
+    else
+	bat --style=plain <(cat $BINDIR/ocomacs-header.ansi <(echo "\n\n") $EMACSDIR/README.md)
+    fi
+}
+
+straight-clean() {
+    # clean straight
+    rm -rf $EMACSDIR/straight/
+}
+
+straight-build() {
+    emacs --batch --load $EMACSDIR/init.el
+}
+
+straight-list-built() {
+    ls -1 $EMACSDIR/straight/build
+}
+
+case $1 in
+    clean )
+        straight-clean
+        ;;
+    
+    build )
+        straight-build
+        ;;
+    
+    rebuild )	
+        straight-clean
+        straight-build
+        ;;
+
+    list )	
+        straight-list-built
+        ;;
+
+    docs )	
+        ocomacs-docs
+        ;;
+
+    *)
+	ocomacs-help
+esac
