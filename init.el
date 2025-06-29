@@ -33,9 +33,11 @@
 ;;; Exit early if in commit mode
 (add-to-list 'auto-mode-alist '("/COMMIT_EDITMSG\\'" . diff-mode))
 
-(unless (seq-find
+(if (seq-find
 	 #'(lambda (a) (string-match-p "COMMIT_EDITMSG" a 0))
 	 command-line-args)
+    (load-theme 'wombat nil nil)
+
 
   ;; Straight
   (defvar bootstrap-version)

@@ -19,7 +19,7 @@ $(cat $BINDIR/ocomacs-header.ansi)
    build    - install build emacs packages from $EMACSDIR/packages.el
    rebuild  - clean and build
    list	    - list installed packages
-   commit   - add changes and start commit edit from cli
+   commit   - stage all changes, begin commit message in $EDITOR
    push     - push changes to upstream once set
    pull     - pull changes from upstream once set
    sync     - pull/view latest changes from ocodo/ocomacs
