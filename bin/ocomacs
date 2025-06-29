@@ -3,23 +3,84 @@
 export EMACSDIR=${EMACSDIR:-~/.emacs.d}
 export OCOMACSNAME=$(basename $0)
 export BINDIR=$(dirname $0)
+export OCOMACS_GITHUB=https://github.com/ocodo/ocomacs
+export OCOMACS_REMOTE=ocomacs
 
 ocomacs-help() {
     cat <<EOF
+
 $(cat $BINDIR/ocomacs-header.ansi)
 
-   ...a post Doom Emacs config framework for Linux, Macos, WSL2/Linux
+   ...a post-doom, Emacs config framework for Linux, Macos, WSL2/Linux
 
-Usage: $OCOMACSNAME [subcommand]
+   Usage: $OCOMACSNAME [subcommand]
 
-   clean   - remove straight installed emacs packages
-   build   - install build emacs packages from $EMACSDIR/packages.el
-   rebuild - clean and build
-   list	   - list installed packages
-   docs    - project docs
-   help	   - this message
+   clean    - remove straight installed emacs packages
+   build    - install build emacs packages from $EMACSDIR/packages.el
+   rebuild  - clean and build
+   list	    - list installed packages
+   commit   - add changes and start commit edit from cli
+   push     - push changes to upstream once set
+   pull     - pull changes from upstream once set
+   sync     - pull/view latest changes from ocodo/ocomacs
+   docs     - project docs
+   help	    - this message
 [0m
 EOF
+}
+
+ocomacs-syncup-log() {
+    echo "sync view log"
+}
+
+ocomacs-syncup-diff() {
+    echo "sync view diff"
+}
+
+ocomacs-syncup-fetch() {
+    echo "sync fetch"
+}
+
+ocomacs-syncup-pull() {
+    echo "sync pull"
+}
+
+ocomacs-syncup-help() {
+    cat <<EOF
+
+$(cat $BINDIR/ocomacs-header.ansi)
+
+   ocomacs sync
+
+   log      - view commit log between ocodomacs and local
+   diff     - view diff of ocodomacs and local
+   fetch    - fetch update commits from ocomacs
+   pull     - pull rebase from ocodomacs
+
+EOF
+}
+
+ocomacs-syncup() {
+    case $1 in
+	fetch )
+            ocomacs-syncup-fetch
+            ;;
+	
+	pull )
+            ocomacs-syncup-pull
+            ;;
+
+	log )
+            ocomacs-syncup-log
+            ;;
+	
+	diff )
+            ocomacs-syncup-diff
+            ;;
+
+	* )
+	    ocomacs-syncup-help
+    esac
 }
 
 ocomacs-docs() {
@@ -44,6 +105,11 @@ straight-list-built() {
 }
 
 case $1 in
+    sync )
+	shift 1
+	ocomacs-syncup $@
+	;;
+    
     clean )
         straight-clean
         ;;
@@ -57,6 +123,19 @@ case $1 in
         straight-build
         ;;
 
+    pull )
+	git -C $EMACSDIR pull --rebase --autostash
+	;;
+
+    commit )
+	git -C $EMACSDIR add --all
+	git -C $EMACSDIR commit
+	;;
+
+    push )
+	git -C $EMACSDIR push
+	;;
+    
     list )	
         straight-list-built
         ;;
@@ -64,7 +143,6 @@ case $1 in
     docs )	
         ocomacs-docs
         ;;
-
     *)
 	ocomacs-help
 esac
