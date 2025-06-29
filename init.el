@@ -52,3 +52,11 @@
 (load-theme 'creamsody 1)
 (load-theme 'creamsody-darker 1)
 
+(let ((local-emacs-conf "~/.config/emacs-local.el")
+      (local-emacs-custom "~/.config/emacs-custom.el"))
+  (setq custom-file local-emacs-custom)
+  (when (file-exists-p custom-file)
+    (load custom-file))
+  (when (file-exists-p local-emacs-conf)
+    (load local-emacs-conf)))
+
