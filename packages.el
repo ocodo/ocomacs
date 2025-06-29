@@ -15,6 +15,8 @@
 (straight-use-package 'company)
 (straight-use-package 'anaconda-mode)
 (straight-use-package 'lua-mode)
+(straight-use-package 'yasnippet)
+(straight-use-package 'yasnippet-snippets)
 
 (straight-use-package 'all-the-icons)
 (straight-use-package
