@@ -12,12 +12,9 @@
 (straight-use-package 'kurecolor)
 (straight-use-package 'markdown-mode)
 (straight-use-package 'jtsx)
-(straight-use-package 'tide)
 (straight-use-package 'company)
 (straight-use-package 'anaconda-mode)
 (straight-use-package 'lua-mode)
-(straight-use-package 'lsp-javascript-typescript)
-(straight-use-package 'lsp-pyright)
 
 (straight-use-package 'all-the-icons)
 (straight-use-package

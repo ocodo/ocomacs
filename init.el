@@ -47,6 +47,7 @@
   (straight-use-package 'use-package)
   (setq straight-use-package-by-default t)
 
+  ;; TODO - byte compile compatible via load-path
   ;; Straight enabled package config
   (load (file-name-concat user-emacs-directory "packages.el"))
   ;; Load everything from /use
