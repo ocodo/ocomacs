@@ -5,7 +5,7 @@
 (defun ocodo/ellama-choose-server-and-model ()
   "Select ellama host and model"
   (interactive)
-  (let* ((host (completing-read "Select host" (ocodo/active-ollama-servers)))
+  (let* ((host (completing-read "Select host: " (ocodo/active-ollama-servers)))
          (model-list (seq-filter
                       (lambda (line)
                         (not (or
