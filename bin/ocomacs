@@ -100,6 +100,10 @@ straight-build() {
     emacs --batch --load $EMACSDIR/init.el
 }
 
+straight-prune() {
+    emacs --batch --load $EMACSDIR/lisp/straight-prune.el
+}
+
 straight-list-built() {
     ls -1 $EMACSDIR/straight/build
 }
@@ -136,6 +140,10 @@ case $1 in
 	git -C $EMACSDIR push
 	;;
     
+    prune )	
+        straight-prune
+        ;;
+
     list )	
         straight-list-built
         ;;

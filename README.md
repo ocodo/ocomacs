@@ -87,6 +87,7 @@ You can also remove packages and rebuild via `~/.emacs.d/bin/ocomacs rebuild`
   - iedit
   - lsp-mode
   - company-mode
+  - yasnippet + yasnippet-snippets 
   - markdown
   - kurecolor
   - dashboard

@@ -20,6 +20,7 @@
 (straight-use-package 'yasnippet)
 (straight-use-package 'yasnippet-snippets)
 (straight-use-package 'treesit-auto)
+(straight-use-package 'editorconfig)
 
 (straight-use-package 'all-the-icons)
 (straight-use-package
