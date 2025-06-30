@@ -4,9 +4,7 @@
   ...a post Doom Emacs config framework for Linux, Macos, WSL2/Linux
 
   Keep you in vanilla emacs, to help you know what's going on,
-  
   Attempts to help limit excessive yak-shaving 
-  
   Avoids the need to learn a huge secondary framework
   
   Requires enough interest in Emacslisp to 
@@ -86,6 +84,7 @@ You can also remove packages and rebuild via `~/.emacs.d/bin/ocomacs rebuild`
   - which-key
   - vertico/orderless
   - magit
+  - iedit
   - lsp-mode
   - company-mode
   - markdown
@@ -96,6 +95,7 @@ You can also remove packages and rebuild via `~/.emacs.d/bin/ocomacs rebuild`
   - ellama
   - move-text
   - duplicate-line or region down/up
+  - s.el
 - Extra language support
   - anaconda-mode (python)
   - jtsx-mode (jsx/js, tsx/ts)
