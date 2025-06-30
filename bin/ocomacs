@@ -15,8 +15,9 @@ $(cat $BINDIR/ocomacs-header.ansi)
 
    Usage: $OCOMACSNAME [subcommand]
 
-   clean    - remove straight installed emacs packages
    build    - install build emacs packages from $EMACSDIR/packages.el
+   prune    - remove unused packages
+   clean    - remove straight installed emacs packages
    rebuild  - clean and build
    list	    - list installed packages
    commit   - stage all changes, begin commit message in $EDITOR
