@@ -5,7 +5,7 @@
   ...a post Doom Emacs config framework for Linux, Macos, WSL2/Linux
 
   Keep you in vanilla emacs, to help you know what's going on,
-  Attempts to help limit excessive yak-shaving 
+  Attempts to help limit excessive yak-shaving. 
   Avoids the need to learn a huge secondary framework
   
   Requires enough interest in Emacslisp to 
