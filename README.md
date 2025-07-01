@@ -45,6 +45,8 @@ emacs -nw
 
 ### How to extend
 
+If you're looking to ocomacs as a very fast config base, and want to keep your own config separate:
+
 Edit `~/.config/ocomacs/packages.el` to add new packages, follow the pattern below. 
 
 ```lisp
@@ -67,6 +69,13 @@ if you want to use use `M-x customize` changes are saved to `~/.config/ocomacs/c
 this file.)
 
 If you want general config use `~/.config/ocomacs/config.el`.
+
+
+- - -
+
+If you want to use ocomacs as a starting point, and are looking for a framework you can fully understand in a few hours, you're who I made this for.
+
+Fork it and keep on making an environment 100% for you.
 
 - - -
 
