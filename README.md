@@ -11,6 +11,11 @@
   Requires enough interest in Emacslisp to 
   learn what you need to do next ...
 
+  There's enough here for a modern editing environment, and the frameword is small enough for you to fork and choose your own adventure, or just add a few packages to `~/.config/ocomacs/packages.el` and rely on the core framework being fast and stable.
+
+  Stick with tag releases to sync, open an issue for bugs, PRs are welcome, but the main goal is for ocomacs to be a starter kit, and foster an ecosystem of forks.
+
+  Ideally, this helps people really get what Emacs is about, cusomization and self sufficient mastery.
 
 ### How to use
 
@@ -40,22 +45,28 @@ emacs -nw
 
 ### How to extend
 
-Edit `packages.el` to add new packages, follow the pattern in the
-file. Try packages with `M-x straight-use-package`
+Edit `~/.config/ocomacs/packages.el` to add new packages, follow the pattern below. 
+
+```lisp
+(straight-use-package 'git-timemachine)
+```
+
+To try packages without commiting them to your config use:
+
+```lisp
+M-x straight-use-package
+```
+- - -
+
+Additional config for packages in `~/.config/ocomacs/use/*.el` - `use-package` is ready
+to go and totally optional, check the examples, in `~/.emacs.d/use/` I keep them fairly simple.
 
 - - -
 
-Additional config for packages in `use/*.el` - `use-package` is ready
-to go, check the examples, I'll deliberately keep them basic.
+if you want to use use `M-x customize` changes are saved to `~/.config/ocomacs/custom.el` (avoid editing
+this file.)
 
-- - -
-
-Use Customize (saved to `~/.config/emacs-custom.el` avoid editing
-this.) or add your own changes in `~/.config/emacs-local.el`.
-
-- - -
-
-You can also remove packages and rebuild via `~/.emacs.d/bin/ocomacs rebuild`
+If you want general config use `~/.config/ocomacs/config.el`.
 
 - - -
 
@@ -103,10 +114,4 @@ You can also remove packages and rebuild via `~/.emacs.d/bin/ocomacs rebuild`
   - jtsx-mode (jsx/js, tsx/ts)
   - lua-mode
   
-## Performance focus
-
-- Immediate `git commit` response
-- Package config with straight in `packages.el`
-- Extra config via `use/*.el`
-- Concat init and bytecompile for fastest possible startup
 
