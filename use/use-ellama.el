@@ -24,8 +24,6 @@
                       (lambda (line)
                         (not (or
                               (s-blank-p line)
-                              (s-starts-with-p "all-minilm" line)
-                              (s-starts-with-p "nomic" line)
                               (s-starts-with-p "NAME" line))))
                       (s-lines (shell-command-to-string
 				(format "OLLAMA_HOST=%s:11434 ollama ls" host)))))
@@ -37,7 +35,7 @@
                   (string-split
                     (completing-read "Select session naming model: " model-list)
                    " ")))
-         (embedding-mode (nth 0
+         (embedding-model (nth 0
                   (string-split
                     (completing-read "Select embedding model: " model-list)
                    " "))))
@@ -46,7 +44,7 @@
      (make-llm-ollama
       :host host
       :chat-model model
-      :embedding-model embedding-mode))
+      :embedding-model embedding-model))
     (setopt ellama-naming-provider
             (make-llm-ollama
              :host host
