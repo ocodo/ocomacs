@@ -1,5 +1,5 @@
 (let* ((assets (file-name-concat user-emacs-directory "assets"))
-       (image-banner (file-name-concat assets "ocomacs-logo.svg"))
+       (image-banner (file-name-concat assets "ocomacs-logo.png"))
        (text-banner (file-name-concat assets "1.txt")))
 
   (use-package dashboard

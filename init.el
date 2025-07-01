@@ -18,30 +18,31 @@
 
 ;; Bare bones UI
 (setq inhibit-splash-screen 1)
-(setopt use-short-answers t)
 (setq package-enable-at-startup nil)
 (setq ring-bell-function 'ignore)
 (tool-bar-mode 0)
 (menu-bar-mode 0)
 (scroll-bar-mode 0)
-
-;;; Edit font preference in ~/.config/ocomacs/emacs-font.el
-;;; load font config...
-(let ((emacs-font-cfg "gui-font.el"))
-  (if (file-exists-p (ocomacs-user emacs-font-cfg))
-      (load emacs-default-font-cfg)
-    (load (ocomacs-default emacs-font-cfg))))
+(setopt use-short-answers t)
 
 ;; GUI Specific...
 (when initial-window-system
-  (when (and
-	 (bound-and-true-p personal-mono-font)
-	 (fontp personal-mono-font))
+  (let ((emacs-font-cfg "gui-font.el"))
+    ;;; Note: Edit font preference in ~/.config/ocomacs/emacs-font.el
+    ;;; -- 8< -------------
+    ;;; load font config...
+    (if (file-exists-p (ocomacs-user emacs-font-cfg))
+	(load emacs-default-font-cfg)
+      (load (ocomacs-default emacs-font-cfg)))
+    
+    (when (and
+	   (bound-and-true-p personal-mono-font)
+	   (fontp personal-mono-font))
       (set-face-attribute
        'default nil
        :height preferred-font-size
-       :font personal-mono-font)))
-  
+       :font personal-mono-font))))
+
 ;; Terminal Specific...
 (unless initial-window-system
   ;; xterm-mouse-mode in terminal
@@ -62,9 +63,8 @@
   
   ;; else
   (progn
-    ;; Regular init continues...
-    
-    ;; Straight
+    ;; Regular init continues...     
+    ;; Bootstrap Straight
     (defvar bootstrap-version)
 
     (let ((bootstrap-file
@@ -84,13 +84,15 @@
 	  (eval-print-last-sexp)))
       (load bootstrap-file nil 'nomessage))
 
-    ;; Require use-package
+    ;; Integrate use-package and straight
     (straight-use-package 'use-package)
     (setq straight-use-package-by-default t)
 
     ;; Straight enabled package config - core packages
     (load (file-name-concat user-emacs-directory "packages.el"))
+
     ;; User/Local packages
+    ;; ~/.config/ocomacs/packages.el
     (ocomacs-when-exists-load (ocomacs-user "packages.el"))
 
     ;; Load everything from /use
@@ -98,8 +100,8 @@
      'load
      ;; everything except revovery files
      (seq-filter (lambda (file) (not (string-match "#" file))) 
-      (file-expand-wildcards
-       (file-name-concat user-emacs-directory "use/*.el"))))    
+		 (file-expand-wildcards
+		  (file-name-concat user-emacs-directory "use/*.el"))))    
 
     (let ((local-emacs-conf (ocomacs-user "local.el"))
 	  (local-emacs-custom (ocomacs-user "custom.el")))
@@ -108,6 +110,6 @@
 
     ;; Get theme list
     (if (bound-and-true-p ocomacs-user-themes)
-      ;; Load user theme(s)
-      (dolist (theme ocomacs-user-themes)
-	(load-theme theme 1)))))
+	;; Load user theme(s)
+	(dolist (theme ocomacs-user-themes)
+	  (load-theme theme 1)))))

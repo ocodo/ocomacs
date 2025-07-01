@@ -17,12 +17,20 @@
   "Load lisp at ocomacs-user PATHNAME."
   (load (ocomacs-user pathname)))
 
+(defun ocomacs-create-config-ocomacs ()
+  "Create `~/.config/ocomacs'."
+  (make-directory "~/.config/ocomacs" t))
+
 (defun ocomacs-when-exists-load (pathname &optional default-content)
   "Load lisp at PATHNAME when exists, or create with DEFAULT-CONTENT."
-  (if (file-exists-p pathname)
-      (load pathname)))
-
-
-
-
-
+  (if (not (string-match "^.*[.]el$" pathname))
+      (error "%s is not emacs-lisp")
+    (if (file-exists-p pathname)
+	(load pathname)
+      (when default-content
+	(let ((dirname (file-name-directory pathname))
+	    (filename (format
+		       (file-name-base pathname)
+		       (file-name-extension pathname))))
+	  (make-directory dirname t)
+	  (with-temp-file pathname (insert default-content)))))))
