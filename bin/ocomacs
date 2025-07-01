@@ -9,7 +9,7 @@ export OCOMACS_REMOTE=ocomacs
 ocomacs-help() {
     cat <<EOF
 
-$(cat $BINDIR/ocomacs-header.ansi)
+$(< $BINDIR/ocomacs-header.ansi)
 
    ...a post-doom, Emacs config framework for Linux, Macos, WSL2/Linux
 
@@ -20,30 +20,58 @@ $(cat $BINDIR/ocomacs-header.ansi)
    clean    - remove straight installed emacs packages
    rebuild  - clean and build
    list	    - list installed packages
+   status   - git status ~/.emacs.d
+   diff     - git diff ~/.emacs.d (unstaged and staged)
+   gap      - git add --patch ~/.emacs.d
    commit   - stage all changes, begin commit message in $EDITOR
    push     - push changes to upstream once set
    pull     - pull changes from upstream once set
-   sync     - pull/view latest changes from ocodo/ocomacs
+   log      - git log
+   sync     - pull/view latest changes from ocodo/ocomacs main
+   local    - interact with local config
    docs     - project docs
    help	    - this message
 [0m
 EOF
 }
 
+ocomacs-local-help() {
+    cat <<EOF
+
+$(< $BINDIR/ocomacs-header.ansi)
+
+   ocomacs local - TODO - tools to interact with local config
+
+   init - create ~/.config/ocomacs default files and init as git repo
+
+   git operatons on ~/.config/ocomacs
+   ----------------------------------
+   status   - git status
+   diff     - git diff
+   gap      - git add
+   commit   - stage all changes, begin commit message in $EDITOR
+   push     - git push changes to origin
+   pull     - git pull changes from origin
+   log      - git log
+   remote   - git remote settings
+   
+EOF
+}
+
 ocomacs-syncup-log() {
-    echo "sync view log"
+    echo "TODO Fork tools sync view log"
 }
 
 ocomacs-syncup-diff() {
-    echo "sync view diff"
+    echo "TODO Fork tools sync view diff"
 }
 
 ocomacs-syncup-fetch() {
-    echo "sync fetch"
+    echo "TODO Fork tools sync fetch"
 }
 
 ocomacs-syncup-pull() {
-    echo "sync pull"
+    echo "TODO Fork tools sync pull"
 }
 
 ocomacs-syncup-help() {
@@ -51,7 +79,7 @@ ocomacs-syncup-help() {
 
 $(cat $BINDIR/ocomacs-header.ansi)
 
-   ocomacs sync
+   ocomacs sync - TODO - tools to sync a fork with ocomacs/main
 
    log      - view commit log between ocodomacs and local
    diff     - view diff of ocodomacs and local
@@ -132,9 +160,28 @@ case $1 in
 	git -C $EMACSDIR pull --rebase --autostash
 	;;
 
+    log )
+	git -C $EMACSDIR log --oneline
+	;;
+
+    status )
+	git -C $EMACSDIR status --short
+	;;
+
+    diff )
+	echo "Unstaged Changes"
+	git --nopager -C $EMACSDIR diff
+	echo "Staged Changes"
+	git --nopager -C $EMACSDIR diff --staged
+	;;
+
+    gap )
+	git -C $EMACSDIR add --patch
+	;;
+
     commit )
 	git -C $EMACSDIR add --all
-	git -C $EMACSDIR commit
+	git -C $EMACSDIR commit -v
 	;;
 
     push )
@@ -149,6 +196,10 @@ case $1 in
         straight-list-built
         ;;
 
+    "local" )	
+        ocomacs-local-help
+        ;;
+    
     docs )	
         ocomacs-docs
         ;;

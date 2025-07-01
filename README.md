@@ -4,6 +4,10 @@
 
   ...a post Doom Emacs config framework for Linux, Macos, WSL2/Linux
 
+  Starts in ~0.7 in Terminal, ~2sec in GUI over X11Fowarding, it's fast...
+
+  Dedicated `$EDITOR git commit` mode starts in less than 0.1s on average.
+
   Keep you in vanilla emacs, to help you know what's going on,
   Attempts to help limit excessive yak-shaving. 
   Avoids the need to learn a huge secondary framework
