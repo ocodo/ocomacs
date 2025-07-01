@@ -1,3 +1,4 @@
+<center><img src="assets/ocomacs-logo.png" /></center>
 
 # ocomacs
 
