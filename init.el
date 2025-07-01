@@ -14,11 +14,7 @@
   "ocomacs-core.el"))
 
 (defvar ocomacs-user-themes (list 'creamsody 'creamsody-dark)
-  "Emacs themes cascade, so we set a list of themes to apply.
-
-Although the is often a list of one theme, Creamsody stacks up different variants.
-
-To set user themes: `(setq ocomacs-user-themes (list 'theme-name ...))'")
+  "Emacs themes cascade, multiple can be applied.")
 
 ;; Bare bones UI
 (setq inhibit-splash-screen 1)
@@ -36,9 +32,8 @@ To set user themes: `(setq ocomacs-user-themes (list 'theme-name ...))'")
       (load emacs-default-font-cfg)
     (load (ocomacs-default emacs-font-cfg))))
 
-;; GUI Specific settings...
-(when initial-window-system    
-  ;; personal-mono-font
+;; GUI Specific...
+(when initial-window-system
   (when (and
 	 (bound-and-true-p personal-mono-font)
 	 (fontp personal-mono-font))
@@ -46,7 +41,7 @@ To set user themes: `(setq ocomacs-user-themes (list 'theme-name ...))'")
        'default nil
        :height preferred-font-size
        :font personal-mono-font)))
-
+  
 ;; Terminal Specific...
 (unless initial-window-system
   ;; xterm-mouse-mode in terminal
