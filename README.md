@@ -14,7 +14,7 @@
   learn what you need to do next ...
 
   There's enough here for a modern editing environment, and the
-  frameword is small enough for you to fork and choose your own
+  framework is small enough for you to fork and choose your own
   adventure, or just add a few packages to
   `~/.config/ocomacs/packages.el` and rely on the core framework being
   fast and stable.
