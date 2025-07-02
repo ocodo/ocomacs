@@ -1,6 +1,7 @@
 #!/bin/bash
 
 export EMACSDIR=${EMACSDIR:-~/.emacs.d}
+export OCOMACS_LOCAL=${OCOMACS_LOCAL:-~/.config/ocomacs}
 export OCOMACSNAME=$(basename $0)
 export BINDIR=$(dirname $0)
 export OCOMACS_GITHUB=https://github.com/ocodo/ocomacs
@@ -71,10 +72,6 @@ ocomacs-local-diff() {
     echo "TODO diff local config"
 }
 
-ocomacs-local-git() {
-    echo "TODO git local config"
-}
-
 ocomacs-local-commit() {
     echo "TODO commit local config"
 }
@@ -96,7 +93,13 @@ ocomacs-local-remote (){
 }
 
 ocomacs-local() {
+    mkdir -p $OCOMACS_LOCAL
+
     case $1 in
+	git )
+	    shift 1
+	    git -C $OCOMACS_LOCAL "$@"
+	    ;;
 	* )
             ocomacs-local-help
             ;;
@@ -222,7 +225,7 @@ case $1 in
 
     git )
 	shift 1
-	git -C $EMACSDIR $@
+	git -C $EMACSDIR "$@"
 	;;
 
     gap )
