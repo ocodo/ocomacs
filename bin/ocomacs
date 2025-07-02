@@ -162,7 +162,7 @@ ocomacs-syncup() {
 
 ocomacs-docs() {
     if which bat > /dev/null 2> /dev/null; then
-	less -f <(cat $BINDIR/ocomacs-header.ansi $EMACSDIR/README.md | sed -e 's/.*<center>.*//')
+	less -f <(cat $BINDIR/ocomacs-header.ansi $EMACSDIR/README.md | sed -e 's/.*!\[\](.*//')
     else
 	bat --style=plain <(cat $BINDIR/ocomacs-header.ansi <(echo "\n\n") $EMACSDIR/README.md)
     fi
