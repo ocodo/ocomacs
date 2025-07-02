@@ -170,9 +170,9 @@ case $1 in
 
     diff )
 	echo "Unstaged Changes"
-	git --nopager -C $EMACSDIR diff
+	git --no-pager -C $EMACSDIR diff
 	echo "Staged Changes"
-	git --nopager -C $EMACSDIR diff --staged
+	git --no-pager -C $EMACSDIR diff --staged
 	;;
 
     gap )
