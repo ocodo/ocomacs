@@ -1,5 +1,5 @@
 (let* ((assets (file-name-concat user-emacs-directory "assets"))
-       (image-banner (file-name-concat assets "ocomacs-logo.png"))
+       (image-banner (file-name-concat assets "ocomacs-logotype.png"))
        (text-banner (file-name-concat assets "1.txt")))
 
   (use-package dashboard
@@ -10,10 +10,11 @@
      dashboard-footer-messages '(
 				 "if you can think of a better footer message, customize it."
 				 "In the 70s the future was cool"
-				 "mnml editor macros framework goals"
-				 "Emacs in a second, that's the ocomacs goal (~2sec is ok)"
+				 "OCOMACS ← TECO editor macros 1976"
+				 "Emacs start in under a second the ocomacs goal"
 				 "Emacs-lisp learn (maybe-p (like-it ,@you))"
-				 "learn you a Haskell to annoy APL heads (monads were simple in '66)"
-				 "Renegade...x[⍋x←6?40]"
-				 ))  
+				 "Life is a x[⍋x←6?40]"
+				 "fork it, sail away"
+				 "Lisp... weird but cool"
+				 ))
     (dashboard-setup-startup-hook)))
