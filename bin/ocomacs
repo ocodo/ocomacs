@@ -42,20 +42,65 @@ $(< $BINDIR/ocomacs-header.ansi)
 
    ocomacs local - TODO - tools to interact with local config
 
-   init - create ~/.config/ocomacs default files and init as git repo
 
    git operatons on ~/.config/ocomacs
    ----------------------------------
+   init     - create ~/.config/ocomacs default files and init as git repo
    status   - git status
    diff     - git diff
    gap      - git add
+   git      - any git operation on
    commit   - stage all changes, begin commit message in $EDITOR
    push     - git push changes to origin
    pull     - git pull changes from origin
    log      - git log
    remote   - git remote settings
-   
+
 EOF
+}
+
+ocomacs-local-init() {
+    echo "TODO init local config"
+}
+
+ocomacs-local-status() {
+    echo "TODO status local config"
+}
+
+ocomacs-local-diff() {
+    echo "TODO diff local config"
+}
+
+ocomacs-local-git() {
+    echo "TODO git local config"
+}
+
+ocomacs-local-commit() {
+    echo "TODO commit local config"
+}
+
+ocomacs-local-push() {
+    echo "TODO push local config"
+}
+
+ocomacs-local-pull() {
+    echo "TODO pull local config"
+}
+
+ocomacs-local-log() {
+    echo "TODO log local config"
+}
+
+ocomacs-local-remote (){
+    echo "TODO remote local config"
+}
+
+ocomacs-local() {
+    case $1 in
+	* )
+            ocomacs-local-help
+            ;;
+    esac
 }
 
 ocomacs-syncup-log() {
@@ -94,7 +139,7 @@ ocomacs-syncup() {
 	fetch )
             ocomacs-syncup-fetch
             ;;
-	
+
 	pull )
             ocomacs-syncup-pull
             ;;
@@ -102,7 +147,7 @@ ocomacs-syncup() {
 	log )
             ocomacs-syncup-log
             ;;
-	
+
 	diff )
             ocomacs-syncup-diff
             ;;
@@ -142,16 +187,16 @@ case $1 in
 	shift 1
 	ocomacs-syncup $@
 	;;
-    
+
     clean )
         straight-clean
         ;;
-    
+
     build )
         straight-build
         ;;
-    
-    rebuild )	
+
+    rebuild )
         straight-clean
         straight-build
         ;;
@@ -175,6 +220,11 @@ case $1 in
 	git --no-pager -C $EMACSDIR diff --staged
 	;;
 
+    git )
+	shift 1
+	git -C $EMACSDIR $@
+	;;
+
     gap )
 	git -C $EMACSDIR add --patch
 	;;
@@ -187,20 +237,21 @@ case $1 in
     push )
 	git -C $EMACSDIR push
 	;;
-    
-    prune )	
+
+    prune )
         straight-prune
         ;;
 
-    list )	
+    list )
         straight-list-built
         ;;
 
-    "local" )	
-        ocomacs-local-help
+    "local" )
+	shift 1
+        ocomacs-local "$@"
         ;;
-    
-    docs )	
+
+    docs )
         ocomacs-docs
         ;;
     *)
