@@ -1,11 +1,16 @@
-(let* ((assets (file-name-concat user-emacs-directory "assets"))
-       (image-banner (file-name-concat assets "ocomacs-logotype.png"))
-       (text-banner (file-name-concat assets "1.txt")))
+(image-type-available-p 'png)
 
+(let* ((assets (file-name-concat user-emacs-directory "assets"))
+       (dashboard-banner (file-name-concat assets
+					   (if initial-window-system
+					       (cond
+						((image-type-available-p 'svg) "ocomacs-logo.svg")
+						((image-type-available-p 'png) "ocomacs-logo.png"))
+					     "1.txt"))))
   (use-package dashboard
     :init
     (setq 
-     dashboard-startup-banner (cons image-banner text-banner)
+     dashboard-startup-banner dashboard-banner
      dashboard-banner-logo-title "a post Doom, configuration framework for Emacs 29+"
      dashboard-footer-messages '(
 				 "if you can think of a better footer message, customize it."
