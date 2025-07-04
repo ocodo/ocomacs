@@ -17,13 +17,14 @@
   "Emacs themes cascade, multiple can be applied.")
 
 ;; Bare bones UI
-(setq inhibit-splash-screen 1)
-(setq package-enable-at-startup nil)
-(setq ring-bell-function 'ignore)
-(tool-bar-mode 0)
-(menu-bar-mode 0)
-(scroll-bar-mode 0)
-(setopt use-short-answers t)
+(progn
+  (setq inhibit-splash-screen 1)
+  (setq package-enable-at-startup nil)
+  (setq ring-bell-function 'ignore)
+  (tool-bar-mode 0)
+  (menu-bar-mode 0)
+  (scroll-bar-mode 0)
+  (setopt use-short-answers t))
 
 ;; GUI Specific...
 (when initial-window-system
@@ -37,7 +38,7 @@
     
     (when (and
 	   (bound-and-true-p personal-mono-font)
-	   (fontp personal-mono-font))
+	   (find-font personal-mono-font))
       (set-face-attribute
        'default nil
        :height preferred-font-size
