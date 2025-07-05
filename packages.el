@@ -8,6 +8,7 @@
 (straight-use-package 'lsp-mode)
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
+(straight-use-package 'marginalia)
 (straight-use-package 'ellama)
 (straight-use-package 'magit)
 (straight-use-package 'kurecolor)

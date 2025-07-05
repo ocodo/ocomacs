@@ -10,7 +10,7 @@ export OCOMACS_REMOTE=ocomacs
 ocomacs-help() {
     cat <<EOF
 
-$(< $BINDIR/ocomacs-header.ansi)
+$(<$BINDIR/ocomacs-header.ansi)
 
    ...a post-doom, Emacs config framework for Linux, Macos, WSL2/Linux
 
@@ -39,7 +39,7 @@ EOF
 ocomacs-local-help() {
     cat <<EOF
 
-$(< $BINDIR/ocomacs-header.ansi)
+$(<$BINDIR/ocomacs-header.ansi)
 
    ocomacs local - TODO - tools to interact with local config
 
@@ -125,7 +125,7 @@ ocomacs-syncup-pull() {
 ocomacs-syncup-help() {
     cat <<EOF
 
-$(cat $BINDIR/ocomacs-header.ansi)
+$(<$BINDIR/ocomacs-header.ansi)
 
    ocomacs sync - TODO - tools to sync a fork with ocomacs/main
 
