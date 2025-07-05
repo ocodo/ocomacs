@@ -28,13 +28,15 @@
 
 ;; GUI Specific...
 (when initial-window-system
-  (let ((emacs-font-cfg "gui-font.el"))
-    ;;; Note: Edit font preference in ~/.config/ocomacs/emacs-font.el
+  (let ((ocomacs-font-cfg "gui-font.el"))
+    ;;; Note: Edit font preference in ~/.config/ocomacs/gui-font.el
     ;;; -- 8< -------------
     ;;; load font config...
-    (if (file-exists-p (ocomacs-user emacs-font-cfg))
-	(load emacs-default-font-cfg)
-      (load (ocomacs-default emacs-font-cfg)))
+    (if (file-exists-p (ocomacs-user-path ocomacs-font-cfg))
+  	(load (ocomacs-user-path ocomacs-font-cfg))
+      ;; Load one of ocomacs monospaced font options
+      ;; (first one present)
+      (load (ocomacs-lisp-path ocomacs-font-cfg)))
     
     (when (and
 	   (bound-and-true-p personal-mono-font)
@@ -94,18 +96,13 @@
 
     ;; User/Local packages
     ;; ~/.config/ocomacs/packages.el
-    (ocomacs-when-exists-load (ocomacs-user "packages.el"))
+    (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
 
     ;; Load everything from /use
-    (mapc
-     'load
-     ;; everything except revovery files
-     (seq-filter (lambda (file) (not (string-match "#" file))) 
-		 (file-expand-wildcards
-		  (file-name-concat user-emacs-directory "use/*.el"))))    
+    (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
 
-    (let ((local-emacs-conf (ocomacs-user "local.el"))
-	  (local-emacs-custom (ocomacs-user "custom.el")))
+    (let ((local-emacs-conf (ocomacs-user-path "local.el"))
+	  (local-emacs-custom (ocomacs-user-path "custom.el")))
       (setq custom-file local-emacs-custom)
       (ocomacs-when-exists-load local-emacs-conf))
 
