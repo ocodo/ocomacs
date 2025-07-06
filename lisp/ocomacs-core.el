@@ -1,4 +1,8 @@
 ;;; external dependencies rule : minimal from emacs lisp, no external packages.
+(defun ocomacs-reload ()
+  "Reload config."
+  (interactive)
+  (load (file-name-concat user-emacs-directory "init.el")))
 
 ;;; minimal core for config management:
 (defun ocomacs-lisp-path (&rest path-components)
