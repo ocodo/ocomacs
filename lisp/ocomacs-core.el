@@ -1,9 +1,4 @@
 ;;; external dependencies rule : minimal from emacs lisp, no external packages.
-(defun ocomacs-reload ()
-  "Reload config."
-  (interactive)
-  (load (file-name-concat user-emacs-directory "init.el")))
-
 ;;; minimal core for config management:
 (defun ocomacs-lisp-path (&rest path-components)
   "Generate full path for PATH-COMPONENTS in ocomacs lisp."
@@ -59,11 +54,6 @@ extension .el."
     (when (file-exists-p el-pathname)
       (load el-pathname))))
 
-;;; Test
-;; (ocomacs--load-lisp-after-body
-;;  (ocomacs-lisp-path "test.el")
-;;  (message "testing123 -- does this first"))
-
 (defun ocomacs-file-write-text (string pathname)
   "Write STRING to PATHNAME."
   (with-temp-file pathname (insert string)))
@@ -85,19 +75,23 @@ loaded."
 	   (make-directory new-dirname))
 	 (ocomacs-file-write-text default-content pathname))))))
 
-
 (defun ocomacs-when-exists-load (pathname)
   "Load the file at PATHNAME"
   (when (file-exists-p pathname)
     (load pathname)))
-  
 
-;;; Test 
-;;; (ocomacs-create-or-load
-;;;  (ocomacs-lisp-path "test.el")
-;;;  "(message \"Does not overwrite...\")")
-;;
-;; note reading a file from a string is available in
-;; cvs-file-to-string
+(defun ocomacs-reload ()
+  "Reload config."
+  (interactive)
+  (load (file-name-concat user-emacs-directory "init.el")))
 
+(defun ocomacs-sync ()
+  "Sync from ocomacs mainline."
+  (interactive)
+  (async-shell-command
+   (format
+    "TERM=dumb git -C %s pull --rebase --autostash"
+    user-emacs-directory))
+  (straight-rebuild-all)
+  (ocomacs-reload))
 
