@@ -29,7 +29,7 @@
 ;; GUI Specific...
 (when initial-window-system
     ;;; load font config...
-    (ocomacs-font-config))
+    (ocomacs-default-font-config))
     ;;; Note: Edit font preference in
     ;;; ~/.config/ocomacs/ocomacs-gui-font.el
 
