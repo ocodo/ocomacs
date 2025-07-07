@@ -156,9 +156,9 @@ default face."
 
 (defvar ocomacs-preferred-font-height
   %s \"height in 1/10pt\")"
-	       font-name
+	       font-family
 	       font-weight
-	       font-height))))) 
+	       font-height)))))
 
 (defun ocomacs-default-font-config ()
   "Get `ocomacs-personal-mono-font' and `ocomacs-preferred-font-height'
@@ -170,8 +170,9 @@ If the ocomacs-default (OcodoMono Nerd Font) and the user preferred font
 is not configured.  Ask for the user to select the preffered font and h"
   (interactive)
   (let ((ocomacs-gui-font-config
-	 (or (file-exists-p (ocomacs-user-path "ocomacs-gui-font.el"))
-	     (ocomacs-lisp-path "ocomacs-gui-font.el"))))
+	 (if (file-exists-p (ocomacs-user-path "ocomacs-gui-font.el"))
+	     (ocomacs-user-path "ocomacs-gui-font.el")
+	    (ocomacs-lisp-path "ocomacs-gui-font.el"))))
 
     (load ocomacs-gui-font-config)
 
