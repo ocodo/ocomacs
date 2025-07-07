@@ -28,23 +28,10 @@
 
 ;; GUI Specific...
 (when initial-window-system
-  (let ((ocomacs-font-cfg "gui-font.el"))
-    ;;; Note: Edit font preference in ~/.config/ocomacs/gui-font.el
-    ;;; -- 8< -------------
     ;;; load font config...
-    (if (file-exists-p (ocomacs-user-path ocomacs-font-cfg))
-  	(load (ocomacs-user-path ocomacs-font-cfg))
-      ;; Load one of ocomacs monospaced font options
-      ;; (first one present)
-      (load (ocomacs-lisp-path ocomacs-font-cfg)))
-    
-    (when (and
-	   (bound-and-true-p personal-mono-font)
-	   (find-font personal-mono-font))
-      (set-face-attribute
-       'default nil
-       :height preferred-font-size
-       :font personal-mono-font))))
+    (ocomacs-font-config))
+    ;;; Note: Edit font preference in
+    ;;; ~/.config/ocomacs/ocomacs-gui-font.el
 
 ;; Terminal Specific...
 (unless initial-window-system

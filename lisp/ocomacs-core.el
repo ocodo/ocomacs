@@ -9,7 +9,7 @@
   (load (ocomacs-lisp-path script)))
 
 (defun ocomacs-load-all-el-at (pathname)
-  "Load all lisp from a given PATHNAME." 
+  "Load all lisp from a given PATHNAME."
   (mapcar
    'load
    (seq-filter
@@ -95,3 +95,96 @@ loaded."
   (straight-rebuild-all)
   (ocomacs-reload))
 
+(defun ocomacs-get-font-name-weight-string (font)
+  (apply 'format (list
+  (format
+   "%s-%s"
+   (font-get font :family)
+   (font-get font :weight)))))
+
+(defun ocomacs-system-fonts ()
+  "List of system fonts."
+  (x-list-fonts "*"))
+
+(defun ocomacs-set-default-face ()
+  "Set the default font and height interactively."
+  (interactive)
+  (let* ((selected-font
+	  (completing-read "Select default font: "
+			   (ocomacs-system-fonts)))
+
+	 (selected-size
+	  (read-number "Select default font size: " 12)))
+
+    (set-face-attribute 'default nil :font selected-font )
+    (set-face-attribute 'default nil :height (* 10 selected-size))))
+
+(defun ocomacs-install-ocodo-mono ()
+  "Install OcodoMono Nerd Font in ~/.local/share/fonts."
+  (interactive)
+  (async-shell-command (concat "cd ~/.local/share/fonts &&"
+			       "wget -N https://github.com/ocodo/ocodo-mono/releases/latest/download/"
+			       "OcodoMono-NerdFont.zip &&"
+			       "unzip -v -f OcodoMono-NerdFont.zip '*ttf' &&"
+			       "echo 'OcodoMono Font install complete'")))
+
+(defun ocomacs-user-font-config-from-default-face ()
+  "Save/replace the ocomacs user font config from the current
+default face."
+  (interactive)
+  (let ((user-font-default-lisp (file-name-concat ocomacs-default-user-dir "ocomacs-gui-font.el"))
+	(font-family (face-attribute 'default :family))
+	(font-height (face-attribute 'default :height))
+	(font-weight (face-attribute 'default :weight)))	
+    (message
+     "Writing user font default: %s" user-font-default-lisp)
+    (with-temp-file
+	user-font-default-lisp
+      (insert
+       (format ";;; Config your preferred font and font-size
+
+;;; Install ocodo-mono at ~/.local/share/fonts with (ocomacs-install-ocodo-mono)
+;;; View at https://github.com/ocodo/ocodo-mono
+;;; Download complete font set zip
+;;; https://github.com/ocodo/ocodo-mono/releases/latest/download/OcodoMono-NerdFont.zip
+
+(defvar ocomacs-personal-mono-font
+  (font-spec
+   :family \"%s\"
+   :weight '%s)
+  \"Personal default monospaced - font spec - Nerd Fonts recommended\")
+
+(defvar ocomacs-preferred-font-height
+  %s \"height in 1/10pt\")"
+	       font-name
+	       font-weight
+	       font-height))))) 
+
+(defun ocomacs-default-font-config ()
+  "Get `ocomacs-personal-mono-font' and `ocomacs-preferred-font-height'
+from core or ocomacs user config.
+
+Then set default face font and height.
+
+If the ocomacs-default (OcodoMono Nerd Font) and the user preferred font
+is not configured.  Ask for the user to select the preffered font and h"
+  (interactive)
+  (let ((ocomacs-gui-font-config
+	 (or (file-exists-p (ocomacs-user-path "ocomacs-gui-font.el"))
+	     (ocomacs-lisp-path "ocomacs-gui-font.el"))))
+
+    (load ocomacs-gui-font-config)
+
+    (if (and
+	 (bound-and-true-p ocomacs-personal-mono-font)
+	 ;; find font in OS
+	 (x-list-fonts (format "*-%s-*"
+	  (ocomacs-get-font-name-weight-string
+	   ocomacs-personal-mono-font))))
+
+	(set-face-attribute
+	 'default nil
+	 :height ocomacs-preferred-font-height
+	 :font ocomacs-personal-mono-font)
+      (ocomacs-set-default-face)
+      (ocomacs-user-font-config-from-default-face))))
