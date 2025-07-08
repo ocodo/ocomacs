@@ -18,6 +18,10 @@
     ;; Generate wildcard .el list for PATHNAME
     (file-expand-wildcards (format "%s/*.el" pathname)))))
 
+(defun om-lines (&rest lines)
+  "Join LINES a list of strings with newline separators."
+  (string-join lines "\n"))
+
 ;; user config
 (defvar ocomacs-default-user-dir "~/.config/ocomacs/"
   "Default directory for ocomacs user config.")
