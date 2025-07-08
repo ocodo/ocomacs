@@ -119,7 +119,7 @@ loaded."
     (set-face-attribute 'default nil :font selected-font )
     (set-face-attribute 'default nil :height (* 10 selected-size))))
 
-(defun ocomacs-install-ocodo-mono ()
+(defun ocomacs-install-or-update-ocodo-mono-fonts ()
   "Install OcodoMono Nerd Font in ~/.local/share/fonts."
   (interactive)
   (async-shell-command (concat "cd ~/.local/share/fonts && "
@@ -144,7 +144,7 @@ default face."
       (insert
        (format ";;; Config your preferred font and font-size
 
-;;; Install ocodo-mono at ~/.local/share/fonts with (ocomacs-install-ocodo-mono)
+;;; Install ocodo-mono at ~/.local/share/fonts with (ocomacs-install-or-update-ocodo-mono-fonts)
 ;;; View at https://github.com/ocodo/ocodo-mono
 ;;; Download complete font set zip
 ;;; https://github.com/ocodo/ocodo-mono/releases/latest/download/OcodoMono-NerdFont.zip
