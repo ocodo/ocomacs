@@ -122,10 +122,11 @@ loaded."
 (defun ocomacs-install-ocodo-mono ()
   "Install OcodoMono Nerd Font in ~/.local/share/fonts."
   (interactive)
-  (async-shell-command (concat "cd ~/.local/share/fonts &&"
+  (async-shell-command (concat "cd ~/.local/share/fonts && "
 			       "wget -N https://github.com/ocodo/ocodo-mono/releases/latest/download/"
-			       "OcodoMono-NerdFont.zip &&"
-			       "unzip -v -f OcodoMono-NerdFont.zip '*ttf' &&"
+			       "OcodoMono-NerdFont.zip && "
+			       "unzip -o OcodoMono-NerdFont.zip '*ttf' && "
+			       "rm -v OcodoMono-NerdFont.zip && "
 			       "echo 'OcodoMono Font install complete'")))
 
 (defun ocomacs-user-font-config-from-default-face ()
