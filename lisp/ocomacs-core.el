@@ -19,7 +19,7 @@
     (file-expand-wildcards (format "%s/*.el" pathname)))))
 
 (defun om-lines (&rest lines)
-  "Join LINES a list of strings with newline separators."
+  "ocodmacs/core: Join LINES a list of strings with newline separators."
   (string-join lines "\n"))
 
 ;; user config
@@ -132,6 +132,17 @@ loaded."
 			       "unzip -o OcodoMono-NerdFont.zip '*ttf' && "
 			       "rm -v OcodoMono-NerdFont.zip && "
 			       "echo 'OcodoMono Font install complete'")))
+
+(defun ocomacs-install-or-update-ocodo-mono-dotzero-fonts ()
+  "Install OcodoMonoDotZero Nerd Font in ~/.local/share/fonts."
+  (interactive)
+  (async-shell-command (concat "cd ~/.local/share/fonts && "
+			       "wget -N "
+			       "https://github.com/ocodo/ocodo-mono-dotzero/releases/latest/download/"
+			       "OcodoMonoDotZero-NerdFont.zip && "
+			       "unzip -o OcodoMonoDotZero-NerdFont.zip '*ttf' && "
+			       "rm -v OcodoMonoDotZero-NerdFont.zip && "
+			       "echo 'OcodoMonoDotZero Font install complete'")))
 
 (defun ocomacs-user-font-config-from-default-face ()
   "Save/replace the ocomacs user font config from the current
