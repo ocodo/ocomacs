@@ -123,11 +123,30 @@ loaded."
     (set-face-attribute 'default nil :font selected-font )
     (set-face-attribute 'default nil :height (* 10 selected-size))))
 
+(defun ocomacs-install-github-release-asset-to-dir
+    (gh-repo release-asset to-dir
+	    &optional do-unzip unzip-pattern do-remove completed-message)
+  "Fetch a RELEASE-ASSET from a GH-REPO and place it in TO-DIR.
+
+Optional params:
+
+DO-UNZIP (when non-nil)
+filtered by UNZIP-PATTERN (a glob),
+DO-REMOVE (when non-nil) the zip asset
+and/or show COMPLETED-MESSAGE, when done."
+  (interactive)
+;;; TODO ;;;
+  
+  )
+
+
 (defun ocomacs-install-or-update-ocodo-mono-fonts ()
   "Install OcodoMono Nerd Font in ~/.local/share/fonts."
   (interactive)
   (async-shell-command (concat "cd ~/.local/share/fonts && "
-			       "wget -N https://github.com/ocodo/ocodo-mono/releases/latest/download/"
+			       "wget -N https://github.com/"
+			       "ocodo/ocodo-mono"
+			       "/releases/latest/download/"
 			       "OcodoMono-NerdFont.zip && "
 			       "unzip -o OcodoMono-NerdFont.zip '*ttf' && "
 			       "rm -v OcodoMono-NerdFont.zip && "
