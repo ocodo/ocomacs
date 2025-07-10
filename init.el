@@ -81,19 +81,20 @@
     ;; Straight enabled package config - core packages
     (load (file-name-concat user-emacs-directory "packages.el"))
 
-    ;; User/Local packages
-    ;; ~/.config/ocomacs/packages.el
-    (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
-
     ;; Load everything from /use
     (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
 
+    ;; User/Local packages - can override core
+    ;; ~/.config/ocomacs/packages.el
+    (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
+
+    ;; Load user general config and set custom
     (let ((local-emacs-conf (ocomacs-user-path "local.el"))
 	  (local-emacs-custom (ocomacs-user-path "custom.el")))
       (setq custom-file local-emacs-custom)
       (ocomacs-when-exists-load local-emacs-conf))
 
-    ;; Get theme list
+    ;; Get theme list and apply themes
     (if (bound-and-true-p ocomacs-user-themes)
 	;; Load user theme(s)
 	(dolist (theme ocomacs-user-themes)
