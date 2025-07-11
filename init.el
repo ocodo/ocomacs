@@ -56,6 +56,7 @@
     ;; Regular init continues...     
     ;; Bootstrap Straight
     (defvar bootstrap-version)
+    (setq straight-repository-branch "develop")
 
     (let ((bootstrap-file
 	   (expand-file-name
