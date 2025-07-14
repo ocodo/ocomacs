@@ -1,4 +1,4 @@
-![](assets/ocomacs-logotype.png)
+![](assets/ocomacs-logo.png)
 
 # ocomacs
 
