@@ -24,7 +24,8 @@
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
-  (setopt use-short-answers t))
+  (setopt use-short-answers t)
+  (delete-selection-mode 1))
 
 ;; GUI Specific...
 (when initial-window-system
