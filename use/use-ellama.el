@@ -4,22 +4,22 @@
     :init
     (setopt ellama-keymap-prefix "C-c =")
 
-(defvar ocodo/ollama-hosts '("localhost"))
+(defvar ocomacs-ollama-hosts '("localhost"))
 ;;;
 ;;; If you don't have ollama running on localhost
 ;;;
 ;;; Change the list above with your own Ollama/LLM host(s) in ~/.config/emacs-local.el
 ;;;
-;;; (setq ocodo/ollama-hosts '("servername" "192.168.0.10" "10.0.0.3")  ;; etc.
+;;; (setq ocomacs-ollama-hosts '("servername" "192.168.0.10" "10.0.0.3")  ;; etc.
 ;;; 
 ;;; Select from hosts and their models with:
 ;;;
-;;; Run M-x ocodo/ellama-choose-server-and-model to setup ellama on the fly.
+;;; Run M-x ocomacs-ellama-choose-server-and-model to setup ellama on the fly.
 ;;;
-(defun ocodo/ellama-choose-server-and-model ()
+(defun ocomacs-ellama-choose-server-and-model ()
   "Select ellama host and model"
   (interactive)
-  (let* ((host (completing-read "Select host: " (ocodo/active-ollama-servers)))
+  (let* ((host (completing-read "Select host: " (ocomacs-active-ollama-servers)))
          (model-list (seq-filter
                       (lambda (line)
                         (not (or
@@ -52,17 +52,19 @@
              :embedding-model embedding-model))
     (setopt ellama-naming-scheme 'ellama-generate-name-by-llm)))
 
-(defun ocodo/active-ollama-servers ()
+(defun ocomacs-active-ollama-servers ()
   "Check for active Ollama LLM servers"
   (interactive)
-  (seq-filter 'ocodo/ollama-server-check
-              ocodo/ollama-hosts))
+  (seq-filter 'ocomacs-ollama-server-check
+              ocomacs-ollama-hosts))
 
-(defun ocodo/ollama-server-check (host)
+(defun ocomacs-ollama-server-check (host)
   (s-contains-p "Ollama is running"
     (shell-command-to-string (format "curl -m 0.05 %s:11434" host))))
 
-(defun ocodo/local-ollama-server-p ()
+(defun ocomacs-local-ollama-server-p ()
   "Check for local Ollama LLM server."
   (let ((ollama-result))
-    (ocodo/ollama-server-check "localhost"))))
+    (ocomacs-ollama-server-check "localhost"))))
+
+
