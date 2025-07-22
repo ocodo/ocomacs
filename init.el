@@ -1,7 +1,7 @@
-;;;                                             
-;;;      _ \   __|  _ \  __ `__ \   _` |  __|  __| 
-;;;     (   | (    (   | |   |   | (   | (   \__ \ 
-;;;    \___/ \___|\___/ _|  _|  _|\__,_|\___|____/ 
+;;;
+;;;      _ \   __|  _ \  __ `__ \   _` |  __|  __|
+;;;     (   | (    (   | |   |   | (   | (   \__ \
+;;;    \___/ \___|\___/ _|  _|  _|\__,_|\___|____/
 ;;;
 ;;; a post Doom, configuration framework for Emacs 29+
 ;;; https://github.com/ocodo/ocomacs
@@ -13,14 +13,18 @@
   "lisp"
   "ocomacs-core.el"))
 
-(defvar ocomacs-user-themes (list 'creamsody 'creamsody-dark)
-  "Emacs themes cascade, multiple can be applied.")
+(defvar ocomacs-local-emacs-conf (ocomacs-user-path "init.el")
+  "User / machine local emacs init.el")
+
+(setq custom-file (ocomacs-user-path "custom.el"))
 
 ;; Bare bones UI
 (progn
   (setq inhibit-splash-screen 1)
   (setq package-enable-at-startup nil)
   (setq ring-bell-function 'ignore)
+  (setq make-backup-files nil)
+  (electric-pair-mode 1)
   (tool-bar-mode 0)
   (menu-bar-mode 0)
   (scroll-bar-mode 0)
@@ -41,7 +45,7 @@
 
 ;; if emacs is opening COMMIT_EDITMESSAGE for git commit
 (add-to-list 'auto-mode-alist '("/COMMIT_EDITMSG\\'" . diff-mode))
-(if (seq-find 
+(if (seq-find
      #'(lambda (a)
 	 (string-match-p "COMMIT_EDITMSG" a 0))
      command-line-args)
@@ -49,12 +53,12 @@
     ;;; set the theme to deeper-blue
     ;;; return control to the user ASAP
     (load-theme 'deeper-blue nil nil) ;; git commit early exit =>
-  
-  ;; ---8<---------------------------------------------------------
-  
+
+  ;; - Normal Use :: load full config --8<---------------------------------------------------------
+
   ;; else
   (progn
-    ;; Regular init continues...     
+    ;; Regular init continues...
     ;; Bootstrap Straight
     (defvar bootstrap-version)
     (setq straight-repository-branch "develop")
@@ -83,21 +87,17 @@
     ;; Straight enabled package config - core packages
     (load (file-name-concat user-emacs-directory "packages.el"))
 
-    ;; Load everything from /use
+    ;; Load everything from /use (core)
     (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
 
-    ;; User/Local packages - can override core
+    ;; Load user config...
+
+    ;; (**note: user custom.el is set at top**)
+
+    ;; User/Local packages - likely to remove some here.
     ;; ~/.config/ocomacs/packages.el
     (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
-
-    ;; Load user general config and set custom
-    (let ((local-emacs-conf (ocomacs-user-path "local.el"))
-	  (local-emacs-custom (ocomacs-user-path "custom.el")))
-      (setq custom-file local-emacs-custom)
-      (ocomacs-when-exists-load local-emacs-conf))
-
-    ;; Get theme list and apply themes
-    (if (bound-and-true-p ocomacs-user-themes)
-	;; Load user theme(s)
-	(dolist (theme ocomacs-user-themes)
-	  (load-theme theme 1)))))
+    ;; User/local emacs init.el -
+    (ocomacs-when-exists-load ocomacs-local-emacs-conf)
+    ;; User/local emacs ~/.config/ocomacs/use - I will add my personal package config here
+    (ocomacs-load-all-el-at (ocomacs-user-path "use"))))

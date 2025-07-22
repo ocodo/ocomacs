@@ -224,3 +224,18 @@ is not configured.  Ask for the user to select the preffered font and h"
 	 :font ocomacs-personal-mono-font)
       (ocomacs-set-default-face)
       (ocomacs-user-font-config-from-default-face))))
+
+(defun ocomacs-load-theme (theme)
+  "Interactive load custom theme, when called with "
+  (interactive
+   (list
+    (intern (completing-read "Load custom theme: "
+                             (mapcar #'symbol-name
+				     (custom-available-themes))))
+    ))
+  (unless (custom-theme-name-valid-p theme)
+    (error "Invalid theme name `%s'" theme))
+  (when current-prefix-arg
+    (dolist (theme custom-enabled-themes) (disable-theme theme))
+    (setq custom-enabled-themes nil))
+  (load-theme theme t))
