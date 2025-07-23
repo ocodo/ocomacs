@@ -139,12 +139,12 @@ and/or show COMPLETED-MESSAGE, when done."
   
   )
 
-
 (defun ocomacs-install-or-update-ocodo-mono-fonts ()
   "Install OcodoMono Nerd Font in ~/.local/share/fonts."
   (interactive)
   (async-shell-command (concat "cd ~/.local/share/fonts && "
-			       "wget -N https://github.com/"
+			       "wget -N"
+			       "https://github.com/"
 			       "ocodo/ocodo-mono"
 			       "/releases/latest/download/"
 			       "OcodoMono-NerdFont.zip && "
@@ -157,7 +157,9 @@ and/or show COMPLETED-MESSAGE, when done."
   (interactive)
   (async-shell-command (concat "cd ~/.local/share/fonts && "
 			       "wget -N "
-			       "https://github.com/ocodo/ocodo-mono-dotzero/releases/latest/download/"
+			       "https://github.com/"
+			       "ocodo/ocodo-mono-dotzero/"
+			       "releases/latest/download/"
 			       "OcodoMonoDotZero-NerdFont.zip && "
 			       "unzip -o OcodoMonoDotZero-NerdFont.zip '*ttf' && "
 			       "rm -v OcodoMonoDotZero-NerdFont.zip && "
@@ -226,7 +228,11 @@ is not configured.  Ask for the user to select the preffered font and h"
       (ocomacs-user-font-config-from-default-face))))
 
 (defun ocomacs-load-theme (theme)
-  "Interactive load custom theme, when called with "
+  "Load custom THEME.
+
+Load THEME exclusively, disabling any other enabled theme.
+
+When called with universal arg, it will append the theme to `custom-enabled-themes'."
   (interactive
    (list
     (intern (completing-read "Load custom theme: "
@@ -235,7 +241,126 @@ is not configured.  Ask for the user to select the preffered font and h"
     ))
   (unless (custom-theme-name-valid-p theme)
     (error "Invalid theme name `%s'" theme))
-  (when current-prefix-arg
+  (unless current-prefix-arg
     (dolist (theme custom-enabled-themes) (disable-theme theme))
     (setq custom-enabled-themes nil))
   (load-theme theme t))
+
+(defun ocomacs-delete-this-buffer-and-file (NO-CONFIRM)
+  "Delete kill file and buffer, prefix arg non-zero NO-CONFIRM ."
+  (interactive "P")
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (error "'%s' is not a file buffer" name)
+      (when (or force (yes-or-no-p (format  "Delete '%s', Are you sure? " filename)))
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "Deleted '%s'" filename)))))
+
+(defun ocomacs-eval-and-replace ()
+  "Replace the preceding sexp with its result."
+  (interactive)
+  (backward-kill-sexp)
+  (condition-case nil
+      (insert (format "%s" (eval (read (current-kill 0)))))
+    (error (message "Invalid expression")
+           (insert (current-kill 0)))))
+
+(defun ocomacs-duplicate-sexp (arg)
+  "Duplicate sexp, follows the ARG rules of `kill-sexp'."
+  (interactive "p")
+  (kill-sexp arg)
+  (yank)
+  (yank))
+
+(defun ocomacs-replace-region-with (fn)
+  "Replace current region using FN."
+  (let* ((input (buffer-substring-no-properties (region-beginning) (region-end)))
+         (output (funcall fn input)))
+    (delete-region (region-beginning) (region-end))
+    (insert (if (stringp output) output
+              (format "%S" output)))))
+
+(defun ocomacs-replace-thing-at-point-with (fn)
+  "Get the current thing at point.
+Replace with the return value of the function FN"
+  (let* ((pos1 (car (bounds-of-thing-at-point 'symbol)))
+         (pos2 (cdr (bounds-of-thing-at-point 'symbol)))
+         replacement
+         excerpt)
+    (when (> pos1 0)
+      (setq pos1 (- pos1 1)))
+    (setq excerpt (buffer-substring-no-properties pos1 pos2))
+    (setq replacement (funcall fn excerpt))
+    (delete-region pos1 pos2)
+    (insert replacement)))
+
+(defmacro ocomacs-*-and-replace (name evaluator)
+ "Create a command NAME which replace region with result of EVALUATOR.
+
+For example:
+
+Using `shell-command-to-string', we can make a replace-region
+command with `ocomacs-*-and-replace'
+
+```lisp
+ (ocomacs-*-and-replace shell-command-eval-and-replace #\='shell-command-to-string)
+
+;; =>
+;; (shell-command-eval-and-replace)
+```"
+ `(defun ,name ()
+    (interactive)
+    (if (not (region-active-p))
+        (ocomacs-replace-thing-at-point-with ,evaluator)
+
+      (ocomacs-replace-region-with ,evaluator))))
+
+(ocomacs-*-and-replace ocomacs-calc-eval-replace-at-region-or-point #'calc-eval)
+(ocomacs-*-and-replace ocomacs-shell-command-eval-replace-at-point-or-region #'shell-command-to-string)
+
+(defun ocomacs-toggle-window-split ()
+  "Toggle the current window split
+
+i.e. horizontal -> vertical -> horizontal."
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+             (next-win-buffer (window-buffer (next-window)))
+             (this-win-edges (window-edges (selected-window)))
+             (next-win-edges (window-edges (next-window)))
+             (this-win-2nd (not (and (<= (car this-win-edges)
+                                         (car next-win-edges))
+                                     (<= (cadr this-win-edges)
+                                         (cadr next-win-edges)))))
+             (splitter
+              (if (= (car this-win-edges)
+                     (car (window-edges (next-window))))
+                  'split-window-horizontally
+                'split-window-vertically)))
+        (delete-other-windows)
+        (let ((first-win (selected-window)))
+          (funcall splitter)
+          (if this-win-2nd (other-window 1))
+          (set-window-buffer (selected-window) this-win-buffer)
+          (set-window-buffer (next-window) next-win-buffer)
+          (select-window first-win)
+          (if this-win-2nd (other-window 1))))))
+
+(defun ocomacs-shell-command-to-insert (command)
+  "Execute shell COMMAND and insert the result."
+  (interactive (list (read-shell-command "Shell Command (output insert at point): ")))
+  (insert (shell-command-to-string command)))
+
+(defun ocomacs-write-region ()
+  "If a region is marked, write it to a new file.
+If not, write the whole buffer to a new file"
+  (interactive)
+  (if (region-active-p)
+      (call-interactively #'write-region)
+      (save-mark-and-excursion
+        (call-interactively #'mark-whole-buffer)
+        (call-interactively #'write-region))))
+
