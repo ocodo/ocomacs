@@ -101,10 +101,10 @@ loaded."
 
 (defun ocomacs-get-font-name-weight-string (font)
   (apply 'format (list
-  (format
-   "%s-%s"
-   (font-get font :family)
-   (font-get font :weight)))))
+		  (format
+		   "%s-%s"
+		   (font-get font :family)
+		   (font-get font :weight)))))
 
 (defun ocomacs-system-fonts ()
   "List of system fonts."
@@ -125,7 +125,7 @@ loaded."
 
 (defun ocomacs-install-github-release-asset-to-dir
     (gh-repo release-asset to-dir
-	    &optional do-unzip unzip-pattern do-remove completed-message)
+	     &optional do-unzip unzip-pattern do-remove completed-message)
   "Fetch a RELEASE-ASSET from a GH-REPO and place it in TO-DIR.
 
 Optional params:
@@ -209,7 +209,7 @@ is not configured.  Ask for the user to select the preffered font and h"
   (let ((ocomacs-gui-font-config
 	 (if (file-exists-p (ocomacs-user-path "ocomacs-gui-font.el"))
 	     (ocomacs-user-path "ocomacs-gui-font.el")
-	    (ocomacs-lisp-path "ocomacs-gui-font.el"))))
+	   (ocomacs-lisp-path "ocomacs-gui-font.el"))))
 
     (load ocomacs-gui-font-config)
 
@@ -217,8 +217,8 @@ is not configured.  Ask for the user to select the preffered font and h"
 	 (bound-and-true-p ocomacs-personal-mono-font)
 	 ;; find font in OS
 	 (x-list-fonts (format "*-%s-*"
-	  (ocomacs-get-font-name-weight-string
-	   ocomacs-personal-mono-font))))
+			       (ocomacs-get-font-name-weight-string
+				ocomacs-personal-mono-font))))
 
 	(set-face-attribute
 	 'default nil
@@ -298,7 +298,7 @@ Replace with the return value of the function FN"
     (insert replacement)))
 
 (defmacro ocomacs-*-and-replace (name evaluator)
- "Create a command NAME which replace region with result of EVALUATOR.
+  "Create a command NAME which replace region with result of EVALUATOR.
 
 For example:
 
@@ -311,12 +311,12 @@ command with `ocomacs-*-and-replace'
 ;; =>
 ;; (shell-command-eval-and-replace)
 ```"
- `(defun ,name ()
-    (interactive)
-    (if (not (region-active-p))
-        (ocomacs-replace-thing-at-point-with ,evaluator)
+  `(defun ,name ()
+     (interactive)
+     (if (not (region-active-p))
+         (ocomacs-replace-thing-at-point-with ,evaluator)
 
-      (ocomacs-replace-region-with ,evaluator))))
+       (ocomacs-replace-region-with ,evaluator))))
 
 (ocomacs-*-and-replace ocomacs-calc-eval-replace-at-region-or-point #'calc-eval)
 (ocomacs-*-and-replace ocomacs-shell-command-eval-replace-at-point-or-region #'shell-command-to-string)
@@ -360,7 +360,27 @@ If not, write the whole buffer to a new file"
   (interactive)
   (if (region-active-p)
       (call-interactively #'write-region)
-      (save-mark-and-excursion
-        (call-interactively #'mark-whole-buffer)
-        (call-interactively #'write-region))))
+    (save-mark-and-excursion
+      (call-interactively #'mark-whole-buffer)
+      (call-interactively #'write-region))))
 
+(defun ocomacs-rename-this-buffer-and-file ()
+  "Renames current buffer and file it is visiting."
+  (interactive)
+  (let ((name (buffer-name))
+        (filename (buffer-file-name))
+        (read-file-name-function 'read-file-name-default))
+    (if (not (and filename (file-exists-p filename)))
+        (error "Buffer '%s' is not visiting a file!" name)
+      (let ((new-name (read-file-name "New name: " filename)))
+        (cond ((get-buffer new-name)
+               (error "A buffer named '%s' already exists!" new-name))
+              (t
+               (rename-file filename new-name 1)
+               (rename-buffer new-name)
+               (set-visited-file-name new-name)
+               (set-buffer-modified-p nil)
+               (message
+		"File '%s' successfully renamed to '%s'"
+		name
+		(file-name-nondirectory new-name))))))))
