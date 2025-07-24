@@ -246,7 +246,7 @@ When called with universal arg, it will append the theme to `custom-enabled-them
     (setq custom-enabled-themes nil))
   (load-theme theme t))
 
-(defun ocomacs-delete-this-buffer-and-file (NO-CONFIRM)
+(defun ocomacs-delete-this-buffer-and-file (no-confirm)
   "Delete kill file and buffer, prefix arg non-zero NO-CONFIRM ."
   (interactive "P")
   (let ((filename (buffer-file-name))
@@ -254,7 +254,7 @@ When called with universal arg, it will append the theme to `custom-enabled-them
         (name (buffer-name)))
     (if (not (and filename (file-exists-p filename)))
         (error "'%s' is not a file buffer" name)
-      (when (or force (yes-or-no-p (format  "Delete '%s', Are you sure? " filename)))
+      (when (or no-confirm (yes-or-no-p (format  "Delete '%s', Are you sure? " filename)))
         (delete-file filename)
         (kill-buffer buffer)
         (message "Deleted '%s'" filename)))))
