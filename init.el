@@ -89,6 +89,8 @@
 
     ;; Load everything from /use (core)
     (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
+    ;; creamsody-darker default theme
+    (ocomacs-load-theme 'creamsody-darker) 
 
     ;; Load user config...
 
