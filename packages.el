@@ -35,7 +35,12 @@
 
 ;; Presentation Core
 (straight-use-package 'all-the-icons)
-(straight-use-package 'simple-modeline)
+;; (straight-use-package 'simple-modeline)
+(straight-use-package
+ '(lambda-line
+   :type git
+   :host github
+   :repo "Lambda-Emacs/lambda-line"))
 
 ;; Default Theme (creamsody, creamsody-darker)
 (straight-use-package 'creamsody-theme)
