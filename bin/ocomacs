@@ -27,6 +27,7 @@ $(<$BINDIR/ocomacs-header.ansi)
    commit   - stage all changes, begin commit message in $EDITOR
    push     - push changes to upstream once set
    pull     - pull changes from upstream once set
+   git      - run git on $EMACSDIR
    log      - git log
    sync     - pull/view latest changes from ocodo/ocomacs main
    local    - interact with local config
@@ -59,6 +60,20 @@ $(<$BINDIR/ocomacs-header.ansi)
 
 EOF
 }
+
+# Guard clauses:
+if [[ ! -d $EMACSDIR \
+	  || ! -f $EMACSDIR/init.el \
+	  || ! -f $EMACSDIR/packages.el \
+	  || ! -d $EMACSDIR/use \
+	  || ! -x $EMACSDIR/bin/ocomacs ]]; then
+
+    cat <<EOF
+\$EMACSDIR: Should be your user-emacs-directory (default: ~/.emacs.d/)
+EOF
+    exit 1
+
+fi
 
 ocomacs-local-init() {
     echo "TODO init local config"

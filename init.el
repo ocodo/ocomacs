@@ -90,16 +90,18 @@
     ;; Load everything from /use (core)
     (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
     ;; creamsody-darker default theme
-    (ocomacs-load-theme 'creamsody-darker) 
+    (ocomacs-load-theme 'creamsody-darker)
+    (creamsody-modeline)
 
-    ;; Load user config...
-
+    ;; Load user config ------------------------------
     ;; (**note: user custom.el is set at top**)
-
-    ;; User/Local packages - likely to remove some here.
+    
+    ;; User/Local packages
     ;; ~/.config/ocomacs/packages.el
     (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
+    
     ;; User/local emacs init.el -
     (ocomacs-when-exists-load ocomacs-local-emacs-conf)
+    
     ;; User/local emacs ~/.config/ocomacs/use - I will add my personal package config here
     (ocomacs-load-all-el-at (ocomacs-user-path "use"))))
