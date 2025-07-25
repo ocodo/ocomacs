@@ -1,4 +1,5 @@
-;;; external dependencies rule : minimal from emacs lisp, no external packages.
+;;; external dependencies rule : minimal from emacs lisp.
+;;; - straight.el.
 ;;; minimal core for config management:
 (defun ocomacs-lisp-path (&rest path-components)
   "Generate full path for PATH-COMPONENTS in ocomacs lisp."
@@ -237,8 +238,7 @@ When called with universal arg, it will append the theme to `custom-enabled-them
    (list
     (intern (completing-read "Load custom theme: "
                              (mapcar #'symbol-name
-				     (custom-available-themes))))
-    ))
+				     (custom-available-themes))))))
   (unless (custom-theme-name-valid-p theme)
     (error "Invalid theme name `%s'" theme))
   (unless current-prefix-arg
@@ -286,16 +286,13 @@ When called with universal arg, it will append the theme to `custom-enabled-them
 (defun ocomacs-replace-thing-at-point-with (fn)
   "Get the current thing at point.
 Replace with the return value of the function FN"
-  (let* ((pos1 (car (bounds-of-thing-at-point 'symbol)))
-         (pos2 (cdr (bounds-of-thing-at-point 'symbol)))
-         replacement
-         excerpt)
-    (when (> pos1 0)
-      (setq pos1 (- pos1 1)))
-    (setq excerpt (buffer-substring-no-properties pos1 pos2))
-    (setq replacement (funcall fn excerpt))
-    (delete-region pos1 pos2)
-    (insert replacement)))
+  (let ((pos1 (car (bounds-of-thing-at-point 'symbol)))
+        (pos2 (cdr (bounds-of-thing-at-point 'symbol))))
+    (let* ((pos1 (if (> pos1 0) (- pos1 1) pos1))
+	  (excerpt (buffer-substring-no-properties pos1 pos2))
+          (replacement (funcall fn excerpt)))
+      (delete-region pos1 pos2)
+      (insert replacement))))
 
 (defmacro ocomacs-*-and-replace (name evaluator)
   "Create a command NAME which replace region with result of EVALUATOR.
@@ -315,7 +312,6 @@ command with `ocomacs-*-and-replace'
      (interactive)
      (if (not (region-active-p))
          (ocomacs-replace-thing-at-point-with ,evaluator)
-
        (ocomacs-replace-region-with ,evaluator))))
 
 (ocomacs-*-and-replace ocomacs-calc-eval-replace-at-region-or-point #'calc-eval)
