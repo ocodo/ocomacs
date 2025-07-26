@@ -91,7 +91,6 @@
     (ocomacs-load-all-el-at (file-name-concat user-emacs-directory "use"))
     ;; creamsody-darker default theme
     (ocomacs-load-theme 'creamsody-darker)
-    (creamsody-modeline)
 
     ;; Load user config ------------------------------
     ;; (**note: user custom.el is set at top**)

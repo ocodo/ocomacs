@@ -38,7 +38,7 @@
 ;; (straight-use-package 'simple-modeline)
 (straight-use-package
  '(lambda-line
-   :type git
+   :branch "fix-vc-git-mode-line-args"
    :host github
    :repo "Lambda-Emacs/lambda-line"))
 
