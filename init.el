@@ -52,7 +52,7 @@
     ;;; If we're just doing a commit
     ;;; set the theme to deeper-blue
     ;;; return control to the user ASAP
-    (ocomacs-load-theme 'deeper) ;; git commit early exit =>
+    (ocomacs-load-theme 'soothe) ;; git commit early exit =>
 
   ;; - Normal Use :: load full config --8<---------------------------------------------------------
 
