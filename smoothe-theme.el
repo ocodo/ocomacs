@@ -1,13 +1,12 @@
-;; This file is part of ocomacs
+;; This file is part of ocomacs https://github.com/ocodo/ocomacs
 ;;
-(deftheme soothe
-  "sooth-theme
-   Created : Tue Jul 17 18:21:38 2012 - Jason Milkins.
-   Updated : Mon Jul 28 10:26:23 2025 - Jason Milkins.
+(deftheme smoothe
+  "smoothe-theme
+   Created : Mon Jul 28 10:26:23 2025 - Jason Milkins.
    Contact : jasonm23@gmail.com
    licence : MIT
 
-   An amalgam of muted color tones and highlighted backgrounds.")
+   An lightweight diversion of soothe theme.")
 
 (let  (
        ;; named colors
@@ -88,7 +87,7 @@
        (delimiter-error "#eF3000"))
 
   (custom-theme-set-faces
-   'soothe
+   'smoothe
 
    ;; Basics
    `(default                                   ((t (:foreground ,foreground  :background ,background                    ))))
@@ -234,7 +233,7 @@
    `(rainbow-delimiters-depth-10-face	       ((t (:foreground ,delimiter-10 )))))
 
   (custom-theme-set-variables
-   'soothe
+   'smoothe
 
    `(ansi-color-names-vector
      ;; black, red, green, yellow, blue, magenta, cyan, white
@@ -248,4 +247,4 @@
   (add-to-list 'custom-theme-load-path
 	       (file-name-as-directory (file-name-directory load-file-name))))
 
-(provide-theme 'soothe)
+(provide-theme 'smoothe)
