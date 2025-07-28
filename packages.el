@@ -11,6 +11,8 @@
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
 (straight-use-package 'marginalia)
+(straight-use-package 'colorful-mode)
+(straight-use-package 'rainbow-delimiters)
 
 ;; Git
 (straight-use-package 'magit)
