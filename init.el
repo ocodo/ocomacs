@@ -92,15 +92,23 @@
     ;; creamsody-darker default theme
     (ocomacs-load-theme 'creamsody-darker)
 
+    ;; Create empty user config folders
+    (ocomacs-create-user-dir "use")
+       
     ;; Load user config ------------------------------
     ;; (**note: user custom.el is set at top**)
     
     ;; User/Local packages
     ;; ~/.config/ocomacs/packages.el
-    (ocomacs-when-exists-load (ocomacs-user-path "packages.el"))
-    
-    ;; User/local emacs init.el -
-    (ocomacs-when-exists-load ocomacs-local-emacs-conf)
+    (ocomacs-create-or-load
+     (ocomacs-user-path "package.el")
+     ";; ocomacs user/local package.el")
+
+    ;; User/local init.el
+    (ocomacs-create-or-load
+     (ocomacs-user-path "init.el")
+     ";; ocomacs user/local init.el")
     
     ;; User/local emacs ~/.config/ocomacs/use - I will add my personal package config here
-    (ocomacs-load-all-el-at (ocomacs-user-path "use"))))
+    (ocomacs-load-all-el-at
+     (ocomacs-user-path "use"))))
