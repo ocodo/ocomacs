@@ -7,8 +7,8 @@
 
 (defvar ocomacs-personal-mono-font
   (font-spec
-   :family "OcodoMono Nerd Font"
-   :weight 'thin)
+   :family "OcodoMono DotZero Nerd Font"
+   :weight 'light)
   "Personal default monospaced - font spec - Nerd Fonts recommended")
 
 (defvar ocomacs-preferred-font-height
