@@ -143,7 +143,9 @@ and/or show COMPLETED-MESSAGE, when done."
 (defun ocomacs-install-or-update-ocodo-mono-fonts ()
   "Install OcodoMono Nerd Font in ~/.local/share/fonts."
   (interactive)
-  (async-shell-command (concat "cd ~/.local/share/fonts && "
+  (async-shell-command (concat
+			       "mkdir -p ~/.local/share/fonts && "
+			       "cd ~/.local/share/fonts && "
 			       "wget -N"
 			       "https://github.com/"
 			       "ocodo/ocodo-mono"
@@ -156,7 +158,9 @@ and/or show COMPLETED-MESSAGE, when done."
 (defun ocomacs-install-or-update-ocodo-mono-dotzero-fonts ()
   "Install OcodoMonoDotZero Nerd Font in ~/.local/share/fonts."
   (interactive)
-  (async-shell-command (concat "cd ~/.local/share/fonts && "
+  (async-shell-command (concat
+			       "mkdir -p ~/.local/share/fonts && "
+			       "cd ~/.local/share/fonts && "
 			       "wget -N "
 			       "https://github.com/"
 			       "ocodo/ocodo-mono-dotzero/"
