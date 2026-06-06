@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 ;;; Config your preferred font and font-size
 ;;; Defaults to NotoSansMono
 

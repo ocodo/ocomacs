@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 ;;; external dependencies rule : minimal from emacs lisp.
 ;;; - straight.el.
 ;;; minimal core for config management:

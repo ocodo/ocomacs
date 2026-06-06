@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 ;; This file is part of ocomacs https://github.com/ocodo/ocomacs
 ;;
 (deftheme smoothe

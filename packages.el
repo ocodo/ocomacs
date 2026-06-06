@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 ;; Pacakages to install
 ;; Core
 (straight-use-package 's)

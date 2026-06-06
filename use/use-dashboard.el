@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (let* ((ocomacs-footer-messages (list
 				 "You can think of a better footer message, customize it."
 				 "OCOMACS ← TECO editor macros 1976"

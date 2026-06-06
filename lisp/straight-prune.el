@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 (let ((bootstrap-file
        (expand-file-name
         "straight/repos/straight.el/bootstrap.el"

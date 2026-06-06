@@ -1,3 +1,4 @@
+;;;  -*- lexical-binding: t; -*-
 ;;; deeper-theme.el --- Custom theme for faces  -*- lexical-binding:t -*-
 
 ;; Copyright (C) 2011-2025 Free Software Foundation, Inc.

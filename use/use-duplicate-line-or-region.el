@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 ;;; replacement, mininal ocodo-handy-functions
 
 (defun duplicate-current-line-or-region (arg &optional up)

@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (setq yas-snippet-dirs
       '(
 	"~/.emacs.d/snippets/"

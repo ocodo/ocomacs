@@ -1,3 +1,4 @@
+;; -*- lexical-binding: t; -*-
 (use-package lambda-line
   :custom
   (lambda-line-vc-symbol "   ")
