@@ -46,3 +46,7 @@
 
 ;; Default Theme (creamsody, creamsody-darker)
 (straight-use-package 'creamsody-theme)
+
+;; VTerm *user will need to confirm compilation of vterm-module on first run.
+(straight-use-package 'vterm)
+
