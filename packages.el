@@ -34,7 +34,7 @@
 (straight-use-package 'yasnippet-snippets)
 ;; Ollama LLM access
 (straight-use-package 'ellama)
-;; Potentiall dropped - Move to ~/.config/ocomacs/
+;; Potentially dropped - Move to ~/.config/ocomacs/
 
 ;; Presentation Core
 (straight-use-package 'all-the-icons)
