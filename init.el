@@ -6,7 +6,6 @@
 ;;;
 ;;; a post Doom, configuration framework for Emacs 29+
 ;;; https://github.com/ocodo/ocomacs
-
 ;; load ocomacs-core
 (load
  (file-name-concat
@@ -36,6 +35,7 @@
 
 ;; GUI Specific...
 (when initial-window-system
+    (setq frame-resize-pixelwise t)
     ;;; load font config...
     (ocomacs-default-font-config))
     ;;; Note: Edit font preference in
