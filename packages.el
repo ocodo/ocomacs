@@ -12,6 +12,8 @@
 (straight-use-package 'vertico)
 (straight-use-package 'orderless)
 (straight-use-package 'marginalia)
+(straight-use-package 'cape)
+(straight-use-package 'corfu)
 (straight-use-package 'colorful-mode)
 (straight-use-package 'rainbow-delimiters)
 

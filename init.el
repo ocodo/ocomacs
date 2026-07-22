@@ -25,6 +25,8 @@
   (setq package-enable-at-startup nil)
   (setq ring-bell-function 'ignore)
   (setq make-backup-files nil)
+  (setq completion-styles
+	'(orderless flex basic))
   (electric-pair-mode 1)
   (tool-bar-mode 0)
   (menu-bar-mode 0)
