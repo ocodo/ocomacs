@@ -20,6 +20,7 @@
 
 ;; Bare bones UI
 (progn
+  (global-set-key [remap dabbrev-expand] 'hippie-expand)
   (setq inhibit-splash-screen 1)
   (setq package-enable-at-startup nil)
   (setq ring-bell-function 'ignore)
