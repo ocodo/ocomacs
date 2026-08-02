@@ -36,13 +36,9 @@
 
 ;; GUI Specific...
 (when initial-window-system
-    (setq frame-resize-pixelwise t)
-    ;;; load font config...
-    (ocomacs-default-font-config))
-    ;;; Note: Edit font preference in
-    ;;; ~/.config/ocomacs/ocomacs-gui-font.el
+  (setq frame-resize-pixelwise t))
 
-;; Terminal Specific...
+;;; Terminal Specific...
 (unless initial-window-system
   ;; xterm-mouse-mode in terminal
   (xterm-mouse-mode 1))
