@@ -6,6 +6,10 @@
 ;;;
 ;;; a post Doom, configuration framework for Emacs 29+
 ;;; https://github.com/ocodo/ocomacs
+
+(require 'tool-bar)
+(require 'scroll-bar)
+
 ;; load ocomacs-core
 (load
  (file-name-concat
